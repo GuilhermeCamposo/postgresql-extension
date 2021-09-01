@@ -10,5 +10,5 @@
 ## Build and push using tekton
 
     oc create -f tekton/source-pvc.yml
-    oc create -f tekton/s2i-task.yml
-    oc create -f tekton/postgresql-pipeline.yml
+    oc apply -f tekton/s2i-task.yml
+    oc apply -f tekton/postgresql-pipeline.yml

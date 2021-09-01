@@ -33,7 +33,6 @@ spec:
         - '--storage-driver=vfs'
         - '--tls-verify=$(params.TLSVERIFY)'
         - '--layers'
-        - '-f Dockerfile'
         - '-t'
         - $(params.IMAGE)
         - .

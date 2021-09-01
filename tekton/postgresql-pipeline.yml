@@ -16,11 +16,6 @@ spec:
       description: Select Branch
       name: BRANCH_NAME
       type: string
-  # resources:
-  #   - name: app-git
-  #     type: git
-  #   - name: image
-  #     type: image
   tasks:
     - name: fetch-repository
       params:

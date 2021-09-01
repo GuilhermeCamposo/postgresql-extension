@@ -42,8 +42,6 @@ spec:
       params:
         - name: BASE_IMAGE
           value: centos/postgresql-96-centos7:latest
-        - name: PATH_CONTEXT
-          value: /workspace/source/scripts/
         - name: TLSVERIFY
           value: 'false'
         - name: IMAGE

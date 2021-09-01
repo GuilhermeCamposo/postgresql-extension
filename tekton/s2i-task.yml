@@ -9,10 +9,6 @@ spec:
     - description: Base image to be used
       name: BASE_IMAGE
       type: string
-    - default: .
-      description: The location of the path to run s2i from.
-      name: PATH_CONTEXT
-      type: string
     - default: 'true'
       description: >-
         Verify the TLS on the registry endpoint (for push/pull to a non-TLS
@@ -31,31 +27,13 @@ spec:
     - description: Digest of the image just built.
       name: IMAGE_DIGEST
   steps:
-    # - command:
-    #     - s2i
-    #     - build
-    #     - $(params.PATH_CONTEXT)
-    #     - $(params.BASE_IMAGE)
-    #     - '--as-dockerfile'
-    #     - /gen-source/Dockerfile.gen
-    #   image: >-
-    #     registry.redhat.io/ocp-tools-4-tech-preview/source-to-image-rhel8@sha256:637c15600359cb45bc01445b5e811b6240ca239f0ebfe406b50146e34f68f631
-    #   name: generate
-    #   resources: {}
-    #   securityContext:
-    #     privileged: true
-    #   volumeMounts:
-    #     - mountPath: /gen-source
-    #       name: gen-source
-    #   workingDir: $(workspaces.source.path)
     - command:
         - buildah
         - bud
         - '--storage-driver=vfs'
         - '--tls-verify=$(params.TLSVERIFY)'
         - '--layers'
-        - '-f'
-        - '$(params.PATH_CONTEXT)/Dockerfile'
+        - '-f Dockerfile'
         - '-t'
         - $(params.IMAGE)
         - .
@@ -65,7 +43,7 @@ spec:
       volumeMounts:
         - mountPath: /var/lib/containers
           name: varlibcontainers
-      workingDir: /gen-source
+      workingDir: $(workspaces.source.path)
     - command:
         - buildah
         - push
@@ -96,8 +74,6 @@ spec:
         secretName: quay-auth-secret
     - emptyDir: {}
       name: varlibcontainers
-    - emptyDir: {}
-      name: gen-source
   workspaces:
     - mountPath: /workspace/source
       name: source

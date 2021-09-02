@@ -6,6 +6,8 @@ LABEL "io.openshift.s2i.build.source-location"="/Users/gdossant/work/git/github/
 
 USER root
 
+COPY config/ /usr/share/container-scripts/postgresql
+
 COPY scripts/ /tmp/src
 
 RUN chown -R 26:0 /tmp/src
